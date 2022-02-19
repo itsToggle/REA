@@ -59,6 +59,15 @@ class Z:
             other.UI = Zges.II * Zges.Z
             other.IU = Zges.UU / other.Z
             return Zges
+    def __div__(self,other):
+        self.Z = self.Z/other
+        return self
+    def __truediv__(self,other):
+        self.Z = self.Z/other
+        return self
+    def __mul__(self,other):
+        self.Z = self.Z*other
+        return self
     def U(self,mode):
         if mode in self.UU.args:
             return simplify(factor(self.II))
@@ -180,9 +189,9 @@ ZRr = R('Rr') # ZR  -> R
 
 #Netzwerk Spannung & Strom definieren
 Us, Is = symbols('Us Is')
-
+S=Symbol('S')
 #Netzwerk aufstellen
-Nges = Netzwerk(Us,Is,(ZRs|ZCh+ZRr)|(ZLh|ZRr))
+Nges = Netzwerk(Us,Is,ZRs+(ZLh|ZRr/S))
 
 #Berechnete Variablen abrufen:
 print('Zges = ' + str(Nges.Z))
